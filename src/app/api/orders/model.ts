@@ -1,11 +1,11 @@
-import { CartItem } from "../users/model";
+import { CartItemType } from "../users/model";
 
 
 
 export type Order = {
     orderId: string;
     orderDate: Date;
-    orderItems: CartItem[];
+    orderItems: CartItemType[];
     total: number;
     totalItems: number;
     shippingAddress: {
