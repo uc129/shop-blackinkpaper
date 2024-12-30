@@ -11,7 +11,7 @@ export const CreateProductStep2 = ({ retrieveCategories }: { productCategories?:
 
     if (!categories || categories.length < 1) return <div>Loading...</div>
     const selectOptions = categories.map(category =>
-        <option key={category._id as string} value={category._id as string}>
+        <option key={category._id as unknown as string} value={category._id as unknown as string}>
             {category.title}
         </option>)
 
@@ -22,7 +22,7 @@ export const CreateProductStep2 = ({ retrieveCategories }: { productCategories?:
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         let selectedCategories = Array.from(e.target.selectedOptions).map(option => option.value)
         setSelectedCategory(selectedCategories);
-        setSelectedCategoriesData(categories.filter(category => selectedCategories.includes(category._id as string)))
+        setSelectedCategoriesData(categories.filter(category => selectedCategories.includes(category._id as unknown as string)))
     }
 
 
