@@ -7,6 +7,8 @@ import { CreateProductStep4 } from "./step4"
 import { ProductType } from "@/app/api/products/model"
 import { useState } from "react"
 import { ButtonWithIcon } from "@/app/components/buttons/buttonsWithIcon"
+import { ImageData } from "@/app/components/buttons/upload-image-button"
+import { Schema } from "mongoose"
 
 
 
@@ -17,9 +19,9 @@ export default function CreateProductPage() {
 
         }} />,
         <CreateProductStep2 retrieveCategories={(categories) => {
-            setProductDetails({ ...productDetails, category: categories })
+            setProductDetails({ ...productDetails, category: categories as unknown as Schema.Types.ObjectId[] })
         }} />,
-        <CreateProductStep3 retrieveImages={(urls, imageData) => {
+        <CreateProductStep3 retrieveImages={(urls: string[], imageData: ImageData[]) => {
             // console.log('retrieving images', urls, imageData);
             setProductDetails({ ...productDetails, image_urls: urls, imageData: imageData })
         }} />,

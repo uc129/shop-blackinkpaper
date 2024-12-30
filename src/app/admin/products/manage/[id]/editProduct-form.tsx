@@ -43,7 +43,7 @@ const EditProductForm = (props: EditProductFormProps) => {
         <CreateProductStep2 productCategories={productCategories[0]} retrieveCategories={(cat) => {
             // console.log('retrieving step2 data', cat)
             // setProductDetails({ ...productDetails, category: cat })
-            setEditedProduct((prev) => ({ ...prev, category: cat }))
+            setEditedProduct((prev) => ({ ...prev, category: cat as unknown as Schema.Types.ObjectId[] }))
         }} />,
         <CreateProductStep3 imageData={props.product.imageData} retrieveImages={(urls, images) => {
             // console.log('retrieving step3 data', urls, images)
