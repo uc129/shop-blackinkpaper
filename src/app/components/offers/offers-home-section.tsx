@@ -10,7 +10,7 @@ export const OffersHomeSection = () => {
 
 
     return (
-        <div className="flex flex-wrap p-18 lg:p-24 gap-16 items-center justify-center  ">
+        <div className="flex flex-wrap px-18 lg:px-24 gap-16 items-center justify-center  ">
 
             <OffersHomeCard
                 title="20% Off All Framed Art"

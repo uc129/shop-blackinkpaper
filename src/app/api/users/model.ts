@@ -12,24 +12,32 @@ export type CartType = {
     totalItems: number;
 }
 
+export type ImageDataType = {
+    publicId: string,
+    url: string,
+    secure_url: string,
+    original_filename: string
+}
+
 
 export type UserType = {
     username: string;
     email: string;
+    phone: string;
     password: string;
     role: string;
     image_urls: string[];
     cart: CartType;
+    authToken: string;
+    tokenExpiration: Date;
+    resetPasswordToken: string;
+    resetPasswordTokenExpiration: Date;
+    isVerified: boolean;
     wishList: {
         items: Schema.Types.ObjectId[] | string[];
     }
     orders: Schema.Types.ObjectId[] | string[];
-    imageData: [{
-        publicId: string;
-        url: string;
-        secure_url: string;
-        original_filename: string;
-    }]
+    imageData: ImageDataType[];
 }
 
 const UserSchema = new Schema<UserType>({
@@ -47,27 +55,28 @@ const UserSchema = new Schema<UserType>({
         total: { type: Number, },
         totalItems: { type: Number, },
     },
-
     wishList: {
         items: [{
             productId: { type: Schema.Types.ObjectId, ref: 'Product', },
         }],
     },
-
     orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
-
-
-
-    image_urls: { type: [String], required: false },
+    authToken: { type: String, },
+    tokenExpiration: { type: Date, },
+    resetPasswordToken: { type: String, },
+    resetPasswordTokenExpiration: { type: Date, },
+    isVerified: { type: Boolean, },
+    phone: { type: String, },
+    image_urls: { type: [String], },
     imageData: [{
-        publicId: { type: String, required: false },
-        url: { type: String, required: false },
-        secure_url: { type: String, required: false },
-        original_filename: { type: String, required: false },
+        publicId: { type: String, },
+        url: { type: String, },
+        secure_url: { type: String, },
+        original_filename: { type: String, },
     }],
 });
 
-const UserModel = mongoose.model<UserType>('User', UserSchema);
 
+const UserModel = mongoose.models['User'] || mongoose.model<UserType>('User', UserSchema);
 
 export { UserModel, UserSchema };

@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { EmblaOptionsType } from 'embla-carousel'
 import Autoplay from 'embla-carousel-autoplay'
@@ -21,7 +22,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             <div className="embla_hero__viewport " ref={emblaRef}>
                 <div className="embla_hero__container ">
                     {slides.map((slide, index) => (
-                        <div className="embla_hero__slide" key={index}>
+                        <div key={index} className="embla_hero__slide">
                             <div className="">{slide}</div>
                         </div>
                     ))}

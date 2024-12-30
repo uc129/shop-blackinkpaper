@@ -10,16 +10,21 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  /* :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-  }
+  } */
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+input,
+textarea,
+button {
+  color: black;
 }
 
 /* headings */
@@ -46,55 +51,52 @@ h2 {
 
 h3 {
   font-size: 1.75rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 h4 {
   font-size: 1.5rem;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 h5 {
   font-size: 1.25rem;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 h6 {
   font-size: 1rem;
-  font-weight: 200;
+  font-weight: 400;
 }
 
-.break-words{
+.break-words {
   word-wrap: break-word;
   word-break: break-all;
 }
 
-.body-text-large{
-  @apply text-2xl
+.body-text-large {
+  @apply text-2xl;
 }
 
-.text-gray{
-  @apply text-gray-500
+.text-gray {
+  @apply text-gray-500;
 }
-
 
 /* form */
 
 .form-group {
   margin-bottom: 1rem;
   padding: auto;
+  @apply grid grid-cols-1 gap-1 items-end;
+}
+
+input[type="checkbox"] {
+  @apply w-4 h-4;
 }
 
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
 }
 
 .form-group textarea {
@@ -113,16 +115,9 @@ h6 {
   cursor: pointer;
 }
 
-.form-control{
-  @apply w-full p-2 border border-gray-300 rounded
+.form-control {
+  @apply w-full p-2 border border-gray-300 rounded;
 }
-
-
-
-
-
-
-
 
 /* Animations */
 
@@ -149,5 +144,31 @@ h6 {
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+.slideFromRight {
+  animation: slideFromRight 0.5s ease;
+}
+
+@keyframes slideFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.slideFromLeft {
+  animation: slideFromLeft 0.5s ease;
+}
+
+@keyframes slideFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
   }
 }

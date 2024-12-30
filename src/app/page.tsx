@@ -1,3 +1,5 @@
+import { ProductCollections } from "./shop/collections/collections";
+import { NewReleaseCollections } from "./shop/collections/new-releases";
 import HeroSection from "./components/hero/hero-section";
 import { OffersHomeSection } from "./components/offers/offers-home-section";
 import ProcessSection from "./components/process/process";
@@ -8,6 +10,7 @@ export default function Home() {
       <HeroSection />
       <ProcessSection />
       <OffersHomeSection />
+      <NewReleaseCollections limit={8} />
     </div>
   );
 }

@@ -406,15 +406,17 @@ const BottomBar = () => {
                 <li>
                     <Link href='/' > Home </Link>
                 </li>
-
-                <li className="z-50" >
-                    <Link href='/shop' onMouseEnter={handleShowCollections}  > Shop Art </Link>
-                    <CollectionsNav classNames="absolute left-0 w-full hidden z-20" onMouseLeave={handleHideCollections} />
+                <li>
+                    <Link href='/about' > About </Link>
                 </li>
 
                 <li className="relative z-50" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <Link href='/collaborations' className=""  > Collaborations 🤝  </Link>
                     <DropDowns links={collabLinks.links} classNames="absolute " />
+                </li>
+                <li className="z-50" >
+                    <Link href='/shop' onMouseEnter={handleShowCollections}  >  Shop Art  </Link>
+                    <CollectionsNav classNames="absolute left-0 w-full hidden z-20" onMouseLeave={handleHideCollections} />
                 </li>
 
                 <li>
@@ -442,9 +444,7 @@ const BottomBar = () => {
 
 const MobileNav = () => {
 
-
-
-    const topBar = <ul className=" z-50 top-bar flex items-center justify-between gap-4 px-12 pt-6">
+    const topBar = <ul className="   flex items-center justify-between gap-4 px-12 pt-6">
         <li>
             <ButtonWithIcon label="" isLink icon={<Link href='/' ><h3>BLACKINKPAPER</h3></Link>} onClick={() => { }} />
         </li>
@@ -470,53 +470,55 @@ const MobileNav = () => {
 
 
     return (
-        <nav className={`flex flex-col  py-4  shadow-md ${isDesktop ? '' : 'px-12'}`}>
-            {topBar}
-            <div className="relative"  >
-                <ButtonWithIcon label={""}
-                    icon={showMenu ?
-                        <X size={1.5 * iconSize} />
-                        :
-                        <List size={1.5 * iconSize} />
+        <div className={`flex flex-col   py-4  shadow-md ${isDesktop ? '' : 'px-12'}`}>
+            <div>
+                {topBar}
+                <div className="relative">
+                    <ButtonWithIcon label={""}
+                        icon={showMenu ?
+                            <X size={1.5 * iconSize} />
+                            :
+                            <List size={1.5 * iconSize} />
+                        }
+                        onClick={handleMenuClick}
+                        classNames={'float-end px-10'}
+                    />
+                    {showMenu
+                        &&
+                        <div className=" mobile-nav-items absolute top-12   w-full px-12 py-8 text-2xl bg-white" >
+                            <ul className=" *:mb-6">
+                                <li>
+                                    <Link href='/' > Home </Link>
+                                </li>
+
+                                <li className="" >
+                                    <Link href='/shop' > Shop Art </Link>
+                                </li>
+
+                                <li className="relative">
+                                    <Link href='/collaborations' className=""  > Collaborations 🤝  </Link>
+                                </li>
+
+                                <li>
+                                    <Link href='/new-arrivals' > Just Launched </Link>
+                                </li>
+
+                                <li>
+                                    <Link href='/contact' > Wall Decor </Link>
+                                </li>
+
+                                <li>
+                                    <Link href='/contact' > Home Decor </Link>
+
+                                </li>
+
+                            </ul>
+                        </div>
                     }
-                    onClick={handleMenuClick}
-                    classNames={'float-end px-10'}
-                />
-                {showMenu
-                    &&
-                    <div className=" mobile-nav-items absolute top-12 left-0  w-full px-12 py-8 text-2xl bg-white" >
-                        <ul className=" *:mb-6">
-                            <li>
-                                <Link href='/' > Home </Link>
-                            </li>
 
-                            <li className="" >
-                                <Link href='/shop' > Shop Art </Link>
-                            </li>
-
-                            <li className="relative">
-                                <Link href='/collaborations' className=""  > Collaborations 🤝  </Link>
-                            </li>
-
-                            <li>
-                                <Link href='/new-arrivals' > Just Launched </Link>
-                            </li>
-
-                            <li>
-                                <Link href='/contact' > Wall Decor </Link>
-                            </li>
-
-                            <li>
-                                <Link href='/contact' > Home Decor </Link>
-
-                            </li>
-
-                        </ul>
-                    </div>
-                }
-
+                </div>
             </div>
-        </nav>
+        </div>
     )
 
 }
@@ -528,6 +530,7 @@ export const Navbar = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (isMobile || isTablet) return;
         let scrollY;
         window.addEventListener('scroll', () => {
             scrollY = window.scrollY;
@@ -547,6 +550,7 @@ export const Navbar = () => {
 
     //  colour for sticky navbar
     useEffect(() => {
+        if (isMobile || isTablet) return;
 
         let navbar = document.getElementsByTagName('nav')[0];
         let socialBar = document.getElementById('social-bar');
@@ -568,13 +572,15 @@ export const Navbar = () => {
 
 
     return (
-        <nav className={` ${isMobile || isTablet ? '' : 'pb-8'} bg-background`}
+        <nav className={` ${isMobile || isTablet ? '' : 'pb-8'} bg-background sticky top-0 z-50`}
             style={{ transition: 'all 0.5s ease', backdropFilter: 'blur(5px)' }}>
 
             {isMobile || isTablet ?
-                <MobileNav />
+                <div className=" ">
+                    <MobileNav />
+                </div>
                 :
-                <div>
+                <div className="large-nav ">
                     <SocialBar />
                     <TopBar />
                     <BottomBar />

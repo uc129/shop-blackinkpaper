@@ -2,14 +2,24 @@
 
 
 
+import { ImageData } from "@/app/components/buttons/upload-image-button";
 import mongoose, { Schema } from "mongoose";
 
 
 export type ProductType = {
-
+    _id: Schema.Types.ObjectId;
     title: string;
     description: string;
-    category: Schema.Types.ObjectId[] | string[];
+    category: Schema.Types.ObjectId[];
+    price: number;
+    discount: number;
+    price_currency: string;
+    product_type: string;
+
+    price_after_discount: number;
+    sell_count: number;
+
+    isFeatured: boolean;
     features: {
         title: string;
         description: string;
@@ -25,13 +35,17 @@ export type ProductType = {
         description: string;
     }[],
     image_urls: string[];
-    imageData: [{
-        publicId: string;
-        url: string;
-        secure_url: string;
-        original_filename: string;
-    }]
+    imageData: ImageData[];
+    createdAt: Date;
+    updatedAt: Date;
 };
+
+export enum ProductTypeEnum {
+    ROLLED = "rolled",
+    FRAMED = "framed",
+    STICKER = "sticker",
+    MERCHANDISE = "merchandise"
+}
 
 
 const ProductSchema = new Schema<ProductType>({
@@ -42,6 +56,14 @@ const ProductSchema = new Schema<ProductType>({
         title: { type: String, },
         description: { type: String, }
     }],
+    discount: { type: Number, },
+    price: { type: Number, },
+    price_after_discount: { type: Number, },
+    price_currency: { type: String, },
+    product_type: { type: String, enum: ["rolled", "framed", "sticker", "merchandise"], default: "rolled" },
+    sell_count: { type: Number, default: 0 },
+    isFeatured: { type: Boolean, default: false },
+
     tools: [{
         title: { type: String, },
         description: { type: String, }
@@ -58,14 +80,16 @@ const ProductSchema = new Schema<ProductType>({
         secure_url: { type: String, },
         original_filename: { type: String, required: false },
     }],
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
 
 }, { timestamps: true });
 
 
 
-const Product = mongoose.model<ProductType>("Product", ProductSchema);
+const ProductModel = mongoose.models['Product'] || mongoose.model<ProductType>("Product", ProductSchema);
 
-export { Product, ProductSchema };
+export { ProductModel, ProductSchema };
 
 
 

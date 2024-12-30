@@ -1,4 +1,6 @@
 import Image from "next/image"
+import CustomImage from "../Image/image"
+import { ButtonWithLink } from "../buttons/buttonWithLink"
 
 
 
@@ -8,11 +10,11 @@ const ProcessData = [
         title: "Paris Architecture",
         description: "We design the perfect logo for your brand. We will work with you to create a logo that represents your brand and its values.",
         images: [
-            "/process/paris/paris-1.jpg",
-            "/process/paris/paris-2.jpg",
-            "/process/paris/paris-3.jpg",
-            "/process/paris/paris-4.jpg",
-            "/process/paris/paris-5.jpg",
+            "/process/paris/paris-1.png",
+            "/process/paris/paris-2.png",
+            "/process/paris/paris-3.png",
+            "/process/paris/paris-4.png",
+            "/process/paris/paris-5.png",
             "/process/paris/paris-6.png"
         ]
     },
@@ -48,37 +50,38 @@ const ProcessSection = () => {
 
     return (
         <section>
-            <h1>Design Process</h1>
-
             <div className="flex flex-col gap-8 ">
                 {
                     ProcessData.map((process) => {
                         return (
-                            <div className="border-b-[1px] border-gray-300">
+                            <div key={process.id} className="border-b-[1px] border-gray-300 pb-8">
 
                                 <h4 className="my-8"> {process.title}</h4>
 
-                                <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 items-center">
+                                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-12 items-center ">
                                     {
-                                        process.images.map((image) => {
-                                            return <Image src={image} alt={process.title} width={300} height={300} className="rounded-md" />
+                                        process.images.map((image, index) => {
+                                            return <CustomImage key={image + index} src={image} alt={process.title} width={300} className="rounded-md" />
                                         })
                                     }
+
                                     {
-                                        process.videos?.map((video) => {
+                                        process.videos?.map((video, index) => {
                                             return (
-                                                <video autoPlay loop muted className="rounded-md">
+                                                <video key={video + index} autoPlay loop muted className="rounded-md">
                                                     <source src={video} type="video/mp4" />
                                                 </video>
                                             )
                                         })
                                     }
-                                    <div>
+
+                                    <div className="col-span-3">
                                         <h4>{process.title}</h4>
                                         <p>{process.description}</p>
                                     </div>
                                 </div>
 
+                                <ButtonWithLink className="my-4" buttonText="Shop Product" link="/shop/product/kemknevrn" />
                             </div>
                         )
 

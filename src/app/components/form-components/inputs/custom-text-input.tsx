@@ -5,7 +5,7 @@
 export type CustomTextInputProps = {
     label: string;
     name: string;
-    type: string;
+    type?: string;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     placeholder?: string;
@@ -13,10 +13,12 @@ export type CustomTextInputProps = {
     onBlur?: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     onFocus?: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     touched?: boolean;
+    min?: number;
+    max?: number;
 }
 
 
-export const CustomTextInput = ({ label, name, type, value, onChange, placeholder, error, onBlur, onFocus, touched, }: CustomTextInputProps) => {
+export const CustomTextInput = ({ label, name, type, value, onChange, placeholder, error, onBlur, onFocus, touched, min, max }: CustomTextInputProps) => {
     return (
         <div className="form-group">
             <label htmlFor={name}>{label}</label>
@@ -30,6 +32,8 @@ export const CustomTextInput = ({ label, name, type, value, onChange, placeholde
                 placeholder={placeholder}
                 onBlur={onBlur}
                 onFocus={onFocus}
+                min={min || 0}
+                max={max}
             />
             {touched && error && <div className="alert alert-danger">{error}</div>}
         </div>
