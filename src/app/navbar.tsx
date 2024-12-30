@@ -444,7 +444,7 @@ const BottomBar = () => {
 
 const MobileNav = () => {
 
-    const topBar = <ul className="   flex items-center justify-between gap-4 px-12 pt-6">
+    const topBar = <ul className="   flex flex-col items-center justify-between gap-4 px-12 pt-6">
         <li>
             <ButtonWithIcon label="" isLink icon={<Link href='/' ><h3>BLACKINKPAPER</h3></Link>} onClick={() => { }} />
         </li>
