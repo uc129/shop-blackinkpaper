@@ -26,6 +26,6 @@ const ProductCategorySchema = new Schema<ProductCategory>({
 });
 
 
-const ProductCategoryModel = mongoose.models['ProductCategory'] || mongoose.model('ProductCategory', ProductCategorySchema);
+const ProductCategoryModel = mongoose.model('ProductCategory', ProductCategorySchema);
 
 export { ProductCategoryModel, ProductCategorySchema };
