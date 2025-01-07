@@ -3,7 +3,13 @@ import { ButtonWithIcon } from "@/app/components/buttons/buttonsWithIcon"
 import { CustomTextInput } from "@/app/components/form-components/inputs/custom-text-input"
 import { useEffect, useState } from "react"
 import { FormContainer } from "../components/form-components/form-container"
+import { useAuthContext } from "../lib/utils/authContext"
+import { useRouter } from "next/navigation"
+
 export default function LoginPage() {
+    const router = useRouter()
+    const { isAuthenticated } = useAuthContext()
+    console.log({ isAuthenticated })
 
     const [loginData, setLoginData] = useState({
         // username: "",
@@ -30,11 +36,20 @@ export default function LoginPage() {
         })
         const data = await res.json()
         if (data.status === 200) {
-            console.log(data)
             localStorage.setItem('email', data.user.email);
             localStorage.setItem('role', data.user.role);
+            if (data.user.role === 'admin')
+                router.replace('/admin')
+            else
+                router.replace('/profile')
         }
     }
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            router.replace('/')
+        }
+    }, [isAuthenticated])
 
 
     return (

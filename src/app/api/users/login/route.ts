@@ -3,6 +3,7 @@ import { UserModel } from "../model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import connect from "../../db-config";
+import { cookies } from 'next/headers'
 
 
 
@@ -40,10 +41,10 @@ export async function POST(req: NextRequest) {
     await user.save();
 
     let res = NextResponse.json({ token: signedToken, user: tokenData, status: 200 });
-    res.cookies.set("authToken", signedToken, {
-        httpOnly: true,
-        maxAge: 24 * 60 * 60,
-    });
+    const cookieStore = await cookies();
+    cookieStore.set('authToken', signedToken, { expires: user.tokenExpiration });
+    return res;
+
 
     return res;
 

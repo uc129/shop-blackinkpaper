@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
     if (cookies) {
         return NextResponse.next()
     }
-    return NextResponse.redirect(new URL('/login', request.url))
+    else return NextResponse.redirect(new URL('/login', request.url))
 }
 
 // See "Matching Paths" below to learn more

@@ -7,6 +7,8 @@ import React from "react";
 import { useEffect, useState, useTransition } from "react";
 import { ButtonWithIcon } from "./components/buttons/buttonsWithIcon";
 import { useWindowContext } from "./lib/utils/windowContext";
+import { useAuthContext } from "./lib/utils/authContext";
+import LogoutButton from "./logout/logoutButton";
 
 
 
@@ -79,7 +81,7 @@ const TopBar = () => {
 
     }
 
-    // const { isAuthenticated } = useAuthContext()
+    const { isAuthenticated } = useAuthContext()
 
 
 
@@ -115,6 +117,9 @@ const TopBar = () => {
                                 <li>
                                     <ButtonWithIcon label="" icon={<ShoppingBag size={iconSize} />} onClick={handleCartClick} />
                                 </li>
+                                {
+                                    isAuthenticated && <li> <LogoutButton /> </li>
+                                }
                             </ul>
 
 
@@ -443,6 +448,7 @@ const BottomBar = () => {
 
 
 const MobileNav = () => {
+    const { isAuthenticated } = useAuthContext()
 
     const topBar = <ul className="   flex flex-col items-center justify-between gap-4 px-12 pt-6">
         <li>
@@ -453,6 +459,7 @@ const MobileNav = () => {
                 <li>  <ButtonWithIcon label="" icon={<MagnifyingGlass size={iconSize} />} onClick={() => { }} /> </li>
                 <li>  <ButtonWithIcon label="" icon={<Heart size={iconSize} />} onClick={() => { }} /> </li>
                 <li>  <ButtonWithIcon label="" icon={<ShoppingBag size={iconSize} />} onClick={() => { }} /> </li>
+                <li> {isAuthenticated && <LogoutButton />}</li>
             </ul>
         </li>
     </ul>
@@ -590,7 +597,5 @@ export const Navbar = () => {
     )
 
 }
-function useAuthContext(): { isAuthenticated: any; } {
-    throw new Error("Function not implemented.");
-}
+
 
