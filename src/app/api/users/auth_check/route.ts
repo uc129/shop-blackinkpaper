@@ -5,8 +5,8 @@ import connect from "../../db-config";
 
 export async function POST(req: NextRequest) {
     await connect()
-    let { email } = await req.json();
-    console.log(email);
+    // let { email } = await req.json();
+    // console.log(email);
 
     const token = req.cookies.get('authToken');
     if (!token) {
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const user = await UserModel.findOne({ email: email });
+        const user = await UserModel.findOne({ authToken: token.value });
         if (!user) {
             return NextResponse.json({ auth: false, status: 401, message: 'User not found' });
         }

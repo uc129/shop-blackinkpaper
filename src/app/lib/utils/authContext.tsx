@@ -20,18 +20,18 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const checkAuth = async () => {
         console.log('checkAuth');
 
-        const email = localStorage.getItem('email') || ''
-        if (!email) {
-            setAuth({
-                user: null,
-                isAuthenticated: false,
-            });
-            return;
-        }
+        // const email = localStorage.getItem('email') || ''
+        // if (!email) {
+        //     setAuth({
+        //         user: null,
+        //         isAuthenticated: false,
+        //     });
+        //     return;
+        // }
 
         const res = await fetch('/api/users/auth_check', {
             method: 'POST',
-            body: JSON.stringify({ email }),
+            // body: JSON.stringify({ email }),
             headers: {
                 'Content-Type': 'application/json',
             },
