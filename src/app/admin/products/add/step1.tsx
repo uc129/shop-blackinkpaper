@@ -69,6 +69,7 @@ export const CreateProductStep1 = ({ product, retrieveData }: { product?: Produc
                     <CustomTextInput type="checkbox" label="Is Featured" name="isFeatured" value={productDetails.isFeatured! as unknown as string} onChange={handleChange} />
                 </form>
 
+
             </FormContainer>
         </div>
     )

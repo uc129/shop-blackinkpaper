@@ -2,20 +2,17 @@
 import { useDataStore } from "@/app/lib/data-store/store"
 import { ProductCollections } from "./collections";
 
-export const BestSellersCollections = () => {
+export const BestSellersCollections = ({ limit }: { limit?: number }) => {
 
     const { products, categories } = useDataStore()
-    const bestSellersCategory = categories.find((category) => category.title.toLowerCase() === "bestSellers");
-    if (!bestSellersCategory) return <h1>Loading...</h1>
-    const bestSellersProducts = products.filter((product) => product.category.includes(bestSellersCategory._id!));
-
+    const bestSellerProducts = products.filter((product) => product.sell_count > 10);
+    if (bestSellerProducts.length === 0) return null
 
     return (
         <div>
-            <h1>bestSellers</h1>
-            <ProductCollections products={bestSellersProducts}
-                title="bestSellers"
-                description="Check out our bestSellers products"
+            <ProductCollections products={bestSellerProducts} limit_products={limit}
+                title="Best Sellers"
+                description="Check out our best sellers"
                 link="/shop/collections/bestSellers"
                 linkText="View All"
             />

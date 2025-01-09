@@ -23,6 +23,10 @@ export const DataStoreProvider = ({ children }: { children: React.ReactNode }) =
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
+            },
+            next: {
+                revalidate: 10000,
+                tags: ['products']
             }
         })
         const data = await response.json()
@@ -37,6 +41,10 @@ export const DataStoreProvider = ({ children }: { children: React.ReactNode }) =
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
+            },
+            next: {
+                revalidate: 10000,
+                tags: ['categories']
             }
         })
         const data = await response.json()

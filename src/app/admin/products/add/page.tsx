@@ -9,6 +9,7 @@ import { useState } from "react"
 import { ButtonWithIcon } from "@/app/components/buttons/buttonsWithIcon"
 import { ImageData } from "@/app/components/buttons/upload-image-button"
 import { Schema } from "mongoose"
+import { revalidateTag } from "next/cache"
 
 
 
@@ -69,6 +70,7 @@ export default function CreateProductPage() {
                 console.log('Product created', data);
                 localStorage.removeItem('productDetails');
                 goToStep(0);
+                revalidateTag('products')
             }
             else
                 console.log(data);
@@ -84,7 +86,7 @@ export default function CreateProductPage() {
 
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col pt-12">
             {steps[step]}
 
             <div className="p-12 w-full flex flex-col items-center">

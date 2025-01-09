@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import { useDataStore } from "@/app/lib/data-store/store";
+import { revalidateTag } from "next/cache";
 
 
 
@@ -50,6 +51,7 @@ export default function ManageCategoryPage() {
         }
         try {
             create();
+            revalidateTag('categories');
         }
         catch (error) {
             console.log(error);

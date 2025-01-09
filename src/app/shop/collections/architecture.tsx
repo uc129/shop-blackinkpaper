@@ -2,7 +2,7 @@
 import { useDataStore } from "@/app/lib/data-store/store"
 import { ProductCollections } from "./collections";
 
-export const ArchitectureCollections = () => {
+export const ArchitectureCollections = ({ limit }: { limit?: number }) => {
 
     const { products, categories } = useDataStore()
     const architectureCategory = categories.find((category) => category.title.toLowerCase() === "architecture");
@@ -13,10 +13,11 @@ export const ArchitectureCollections = () => {
     return (
         <div className="p-12">
             <ProductCollections products={architectureProducts}
-                title="Architecture"
-                description="Check out our architecture products"
+                title="Architecture Collection"
+                description="Check out our architecture collection"
                 link="/shop/collections/architecture"
                 linkText="View All"
+                limit_products={limit}
             />
         </div>
     )

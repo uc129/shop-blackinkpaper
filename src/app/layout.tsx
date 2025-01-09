@@ -6,6 +6,7 @@ import AuthProvider from "./lib/utils/authContext";
 import { DataStoreProvider } from "./lib/data-store/store";
 import { WindowProvider } from "./lib/utils/windowContext";
 import { InfoBar } from "./components/info-bar";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,9 +43,11 @@ export default function RootLayout({
             <body
               className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
+              <Toaster />
+
               <Navbar />
               <InfoBar />
-              <main className="min-w-screen overflow-hidden">
+              <main className="min-w-screen ">
                 {children}
               </main>
             </body>

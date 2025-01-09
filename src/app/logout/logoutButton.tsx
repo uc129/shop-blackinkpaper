@@ -1,11 +1,13 @@
 import { useRouter } from "next/navigation"
 import { ButtonWithIcon } from "../components/buttons/buttonsWithIcon"
 import { useAuthContext } from "../lib/utils/authContext"
+import toast from "react-hot-toast"
 
 
 export default function LogoutButton() {
 
     const router = useRouter()
+    const { isAuthenticated, setCheckAuthFlag } = useAuthContext()
 
 
     const logout = async () => {
@@ -20,11 +22,12 @@ export default function LogoutButton() {
         console.log(data);
 
         if (data.status === 200) {
+            toast.success("Logged out successfully")
             localStorage.removeItem('email');
             localStorage.removeItem('role');
+            setCheckAuthFlag(true)
             console.log('Logged out');
-            router.refresh()
-            router.replace('/login')
+            router.replace('/')
         }
     }
 

@@ -8,6 +8,7 @@ import { ButtonWithIcon } from "@/app/components/buttons/buttonsWithIcon";
 import { useState } from "react";
 import EditProductForm from "./editProduct-form";
 import { ProductType } from "@/app/api/products/model";
+import { revalidateTag } from "next/cache";
 
 export default function ManageProductByIdPage() {
 
@@ -34,6 +35,9 @@ export default function ManageProductByIdPage() {
                 body: JSON.stringify(editedProduct)
             });
             const data = await res.json();
+            if (data.status === 201) {
+                window.location.reload();
+            }
             console.log('data', data);
 
         }

@@ -2,16 +2,15 @@
 
 import { ProductCategory } from "@/app/api/categories/model";
 import { ProductType } from "@/app/api/products/model";
-import { FormContainer } from "@/app/components/form-components/form-container";
-import { CustomTextArea, CustomTextInput } from "@/app/components/form-components/inputs/custom-text-input";
+
 import useMultistepForm from "@/app/lib/multistep-form-hook";
 import { useEffect, useState } from "react";
-import { CreateProductStep1 } from "../../create/step1";
-import { CreateProductStep2 } from "../../create/step2";
+import { CreateProductStep1 } from "../../add/step1";
+import { CreateProductStep2 } from "../../add/step2";
 import { Schema } from "mongoose";
 import { ButtonWithIcon } from "@/app/components/buttons/buttonsWithIcon";
-import { CreateProductStep3 } from "../../create/step3";
-import { CreateProductStep4 } from "../../create/step4";
+import { CreateProductStep3 } from "../../add/step3";
+import { CreateProductStep4 } from "../../add/step4";
 
 type EditProductFormProps = {
     product: ProductType;
@@ -77,7 +76,6 @@ const EditProductForm = (props: EditProductFormProps) => {
             {!isFirstStep && <ButtonWithIcon label='Previous' icon='⬅️' onClick={(e) => { e.preventDefault(); prevStep() }} />}
             {!isLastStep && <ButtonWithIcon label='Next' icon='➡️' onClick={(e) => { e.preventDefault(); nextStep() }} />}
             {
-                isLastStep &&
                 <ButtonWithIcon label='Submit' icon='📤' onClick={handleSubmit} />
             }
         </div>

@@ -18,7 +18,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     )])
 
     return (
-        <section className="embla_hero ">
+        <section className="embla_hero z-0 ">
             <div className="embla_hero__viewport " ref={emblaRef}>
                 <div className="embla_hero__container ">
                     {slides.map((slide, index) => (

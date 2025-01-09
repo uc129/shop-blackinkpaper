@@ -29,8 +29,8 @@ export const ProductCollections = (props: ProductCollectionsProps) => {
     return (
         <div className="pt-12 pb-4">
             <div className="flex flex-col gap-8">
-                <div>
-                    <h4>{props.title} </h4>
+                <div className="text-center">
+                    <h4 className="uppercase">{props.title} </h4>
                     <p>{props.description}</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">

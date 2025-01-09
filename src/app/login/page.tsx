@@ -5,10 +5,11 @@ import { useEffect, useState } from "react"
 import { FormContainer } from "../components/form-components/form-container"
 import { useAuthContext } from "../lib/utils/authContext"
 import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
 
 export default function LoginPage() {
     const router = useRouter()
-    const { isAuthenticated } = useAuthContext()
+    const { isAuthenticated, setCheckAuthFlag } = useAuthContext()
     console.log({ isAuthenticated })
 
     const [loginData, setLoginData] = useState({
@@ -27,6 +28,7 @@ export default function LoginPage() {
     const handleSubmit = async (e: React.MouseEvent) => {
         e.preventDefault()
         console.log(loginData)
+        toast.loading("Logging in...")
         const res = await fetch("/api/users/login", {
             method: "POST",
             headers: {
@@ -36,12 +38,22 @@ export default function LoginPage() {
         })
         const data = await res.json()
         if (data.status === 200) {
+
+            toast.success("Login successful")
+            toast.remove()
+            toast.loading("Redirecting...")
+            toast.remove()
             localStorage.setItem('email', data.user.email);
             localStorage.setItem('role', data.user.role);
+            router.refresh()
+            setCheckAuthFlag(true)
             if (data.user.role === 'admin')
                 router.replace('/admin')
             else
                 router.replace('/profile')
+        }
+        if (data.status !== 200) {
+            toast.error(data.message)
         }
     }
 

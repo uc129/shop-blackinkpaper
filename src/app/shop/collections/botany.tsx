@@ -6,13 +6,15 @@ export const BotanyCollections = () => {
 
     const { products, categories } = useDataStore()
     const botanyCategory = categories.find((category) => category.title.toLowerCase() === "botany");
-    if (!botanyCategory) return <h1>Loading...</h1>
-    const botanyProducts = products.filter((product) => product.category.includes(botanyCategory._id!));
+    const botanyProducts = products.filter((product) => product.category.includes(botanyCategory?._id!));
+
+    if (botanyProducts.length === 0) return null
+    console.log('botany', botanyProducts);
+
 
 
     return (
         <div>
-            <h1>botany</h1>
             <ProductCollections products={botanyProducts}
                 title="Botany"
                 description="Check out our botany products"

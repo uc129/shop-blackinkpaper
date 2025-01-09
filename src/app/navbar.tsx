@@ -109,7 +109,7 @@ const TopBar = () => {
                             <ul className="flex items-start justify-between gap-7">
 
                                 <li>
-                                    <ButtonWithIcon isLink icon={<>  <Link href="/admin/products" > <User size={iconSize} />  </Link></>} label={""} onClick={() => { }} />
+                                    <ButtonWithIcon isLink icon={<>  <Link href="/admin" > <User size={iconSize} />  </Link></>} label={""} onClick={() => { }} />
                                 </li>
                                 <li>
                                     <ButtonWithIcon label="" icon={<Heart size={iconSize} />} onClick={handleWishListClick} />
@@ -293,7 +293,7 @@ const CollectionsNav = (props: { classNames?: string, onMouseLeave?: (e: React.M
 
     return (
         <div className={`${props.classNames}`} id='collections-nav' onMouseLeave={props.onMouseLeave} >
-            <ul className="grid grid-cols-5 px-36 py-10 w-full bg-[#e5dbbf] pt-8 text-black">
+            <ul className="grid grid-cols-5 px-36 py-10 w-full z-50  bg-white pt-8 text-black">
                 {shopLinks.map((collection) =>
                     <li key={collection.collectionName}>
                         <ul>
@@ -417,11 +417,11 @@ const BottomBar = () => {
 
                 <li className="relative z-50" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <Link href='/collaborations' className=""  > Collaborations 🤝  </Link>
-                    <DropDowns links={collabLinks.links} classNames="absolute " />
+                    <DropDowns links={collabLinks.links} classNames="absolute z-50" />
                 </li>
                 <li className="z-50" >
                     <Link href='/shop' onMouseEnter={handleShowCollections}  >  Shop Art  </Link>
-                    <CollectionsNav classNames="absolute left-0 w-full hidden z-20" onMouseLeave={handleHideCollections} />
+                    <CollectionsNav classNames="absolute left-0 w-full hidden z-50" onMouseLeave={handleHideCollections} />
                 </li>
 
                 <li>
@@ -446,89 +446,6 @@ const BottomBar = () => {
 }
 
 
-
-const MobileNav = () => {
-    const { isAuthenticated } = useAuthContext()
-
-    const topBar = <ul className="   flex flex-col items-center justify-between gap-4 px-12 pt-6">
-        <li>
-            <ButtonWithIcon label="" isLink icon={<Link href='/' ><h3>BLACKINKPAPER</h3></Link>} onClick={() => { }} />
-        </li>
-        <li>
-            <ul className="flex gap-8 items-center">
-                <li>  <ButtonWithIcon label="" icon={<MagnifyingGlass size={iconSize} />} onClick={() => { }} /> </li>
-                <li>  <ButtonWithIcon label="" icon={<Heart size={iconSize} />} onClick={() => { }} /> </li>
-                <li>  <ButtonWithIcon label="" icon={<ShoppingBag size={iconSize} />} onClick={() => { }} /> </li>
-                <li> {isAuthenticated && <LogoutButton />}</li>
-            </ul>
-        </li>
-    </ul>
-
-    const [showMenu, setShowMenu] = React.useState(false);
-    const [menuVisible, startTransition] = useTransition();
-    const handleMenuClick = () => {
-        startTransition(() => {
-            setShowMenu(!showMenu);
-        })
-
-    }
-
-    const { isDesktop } = useWindowContext()
-
-
-    return (
-        <div className={`flex flex-col   py-4  shadow-md ${isDesktop ? '' : 'px-12'}`}>
-            <div>
-                {topBar}
-                <div className="relative">
-                    <ButtonWithIcon label={""}
-                        icon={showMenu ?
-                            <X size={1.5 * iconSize} />
-                            :
-                            <List size={1.5 * iconSize} />
-                        }
-                        onClick={handleMenuClick}
-                        classNames={'float-end px-10'}
-                    />
-                    {showMenu
-                        &&
-                        <div className=" mobile-nav-items absolute top-12   w-full px-12 py-8 text-2xl bg-white" >
-                            <ul className=" *:mb-6">
-                                <li>
-                                    <Link href='/' > Home </Link>
-                                </li>
-
-                                <li className="" >
-                                    <Link href='/shop' > Shop Art </Link>
-                                </li>
-
-                                <li className="relative">
-                                    <Link href='/collaborations' className=""  > Collaborations 🤝  </Link>
-                                </li>
-
-                                <li>
-                                    <Link href='/new-arrivals' > Just Launched </Link>
-                                </li>
-
-                                <li>
-                                    <Link href='/contact' > Wall Decor </Link>
-                                </li>
-
-                                <li>
-                                    <Link href='/contact' > Home Decor </Link>
-
-                                </li>
-
-                            </ul>
-                        </div>
-                    }
-
-                </div>
-            </div>
-        </div>
-    )
-
-}
 
 
 export const Navbar = () => {
@@ -594,6 +511,96 @@ export const Navbar = () => {
                 </div>
             }
         </nav>
+    )
+
+}
+
+
+
+const MobileNav = () => {
+    const { isAuthenticated } = useAuthContext()
+
+    const [showMenu, setShowMenu] = React.useState(false);
+    const handleMenuClick = () => {
+        setShowMenu(!showMenu);
+    }
+
+    const { isDesktop } = useWindowContext()
+
+    useEffect(() => {
+        if (showMenu) {
+            document.body.style.overflow = 'hidden';
+        }
+        else {
+            document.body.style.overflow = 'auto';
+        }
+
+    })
+
+    useEffect(() => {
+        window.addEventListener('click', (e) => {
+            let target = e.target as HTMLElement;
+            let mobileNav = document.getElementsByClassName('mobile-nav')[0];
+            if (!target || !mobileNav) return;
+            if (target.classList.contains('mobile-nav') || target.classList.contains('menu-button')) return;
+            setShowMenu(false)
+        })
+    })
+
+
+    return (
+        <div className={`mobile-nav  flex flex-col p-12 sticky top-0 shadow-md ${showMenu ? 'h-screen' : 'h-fit'}`}>
+            <div className="relative flex justify-between ">
+                <ButtonWithIcon label="" isLink icon={<Link href='/' ><h3>BLACKINKPAPER</h3></Link>} onClick={() => { }} />
+                <ButtonWithIcon label={""}
+                    icon={showMenu ?
+                        <X size={1.5 * iconSize} />
+                        :
+                        <List size={1.5 * iconSize} />
+                    }
+                    onClick={handleMenuClick}
+                    classNames={'float-end px-10 menu-button'}
+                />
+            </div>
+            {showMenu
+                &&
+                <div className=" mobile-nav-items    w-full  text-2xl bg-white" >
+                    <ul className=" *:mb-6">
+                        {/* <li>
+                                    <Link href='/' > Home </Link>
+                                </li> */}
+
+                        <li className="" >
+                            <Link href='/shop' > Shop Art </Link>
+                        </li>
+
+                        <li className="relative">
+                            <Link href='/collaborations' className=""  > Collaborations 🤝  </Link>
+                        </li>
+
+                        <li>
+                            <Link href='/new-arrivals' > Just Launched </Link>
+                        </li>
+
+                        <li>
+                            <Link href='/contact' > Wall Decor </Link>
+                        </li>
+
+                        <li>
+                            <Link href='/contact' > Home Decor </Link>
+                        </li>
+                        <li>
+                            {isAuthenticated ?
+                                <LogoutButton /> :
+                                <Link href='/login' > Login </Link>
+                            }
+                        </li>
+
+                    </ul>
+                </div>
+            }
+
+        </div>
     )
 
 }
