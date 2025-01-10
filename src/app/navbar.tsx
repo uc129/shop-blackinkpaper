@@ -49,7 +49,7 @@ const SocialBar = () => {
 
     ]
     return (
-        <div id='social-bar' className="border-b-[1px] border-gray-100 py-2 h-fit ">
+        <div id='social-bar' className="border-b-[1px] border-gray-100 py-2 h-fit " style={{ zIndex: 1000 }}>
 
             <ul className=" flex justify-end items-center gap-2 px-28 ">
                 {socialLinks.map((link) =>
@@ -87,7 +87,7 @@ const TopBar = () => {
 
 
     return (
-        <div>
+        <div style={{ zIndex: 1000 }}>
             <ul className="flex items-start justify-between px-36 py-10 flex-wrap ">
 
                 <li>
@@ -292,8 +292,8 @@ const shopLinks = [
 const CollectionsNav = (props: { classNames?: string, onMouseLeave?: (e: React.MouseEvent) => void }) => {
 
     return (
-        <div className={`${props.classNames}`} id='collections-nav' onMouseLeave={props.onMouseLeave} >
-            <ul className="grid grid-cols-5 px-36 py-10 w-full z-50  bg-white pt-8 text-black">
+        <div className={`${props.classNames}`} id='collections-nav' onMouseLeave={props.onMouseLeave} style={{ zIndex: 1000 }} >
+            <ul className="grid grid-cols-5 px-36 py-10 w-full bg-white pt-8 text-black">
                 {shopLinks.map((collection) =>
                     <li key={collection.collectionName}>
                         <ul>
@@ -340,7 +340,7 @@ const collabLinks = {
 const DropDowns = (props: { links: { title: string, link: string, icon: React.ReactNode }[], onMouseLeave?: (e: React.MouseEvent) => void, classNames?: string }) => {
 
     return (
-        <ul className={`hidden min-w-32 z-50 ${props.classNames}`} onMouseLeave={props.onMouseLeave}>
+        <ul className={`hidden min-w-32  ${props.classNames}`} onMouseLeave={props.onMouseLeave} style={{ zIndex: 1000 }}>
             <div className="mt-4">
                 {props.links.map((link) =>
                     <li key={link.link} className="">
@@ -404,7 +404,7 @@ const BottomBar = () => {
 
     }
     return (
-        <div className="relative z-50">
+        <div className="relative" style={{ zIndex: 1000 }} >
 
             <ul className="flex items-center justify-between px-80 uppercase flex-wrap gap-6  ">
 
@@ -415,25 +415,25 @@ const BottomBar = () => {
                     <Link href='/about' > About </Link>
                 </li>
 
-                <li className="relative z-50" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                {/* <li className="relative " onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <Link href='/collaborations' className=""  > Collaborations 🤝  </Link>
-                    <DropDowns links={collabLinks.links} classNames="absolute z-50" />
-                </li>
-                <li className="z-50" >
+                    <DropDowns links={collabLinks.links} classNames="absolute " />
+                </li> */}
+                <li className="" >
                     <Link href='/shop' onMouseEnter={handleShowCollections}  >  Shop Art  </Link>
-                    <CollectionsNav classNames="absolute left-0 w-full hidden z-50" onMouseLeave={handleHideCollections} />
+                    <CollectionsNav classNames="absolute left-0 w-full hidden " onMouseLeave={handleHideCollections} />
                 </li>
 
                 <li>
-                    <Link href='/new-arrivals' > Just Launched </Link>
+                    <Link href='/shop/collections/new-releases' > Just Launched </Link>
                 </li>
 
                 <li>
-                    <Link href='/contact' > Wall Decor </Link>
+                    <Link href='/shop/collections/botany' > Botany </Link>
                 </li>
 
                 <li>
-                    <Link href='/contact' > Home Decor </Link>
+                    <Link href='/shop/collections/architecture' > Architecture </Link>
 
                 </li>
 
@@ -451,7 +451,6 @@ const BottomBar = () => {
 export const Navbar = () => {
 
     const [scrolledPast, setScrolledPast] = useState(false);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (isMobile || isTablet) return;
@@ -480,12 +479,12 @@ export const Navbar = () => {
         let socialBar = document.getElementById('social-bar');
         if (!navbar || !socialBar) return;
         if (scrolledPast) {
-            navbar.classList.add('sticky', 'top-0', 'z-50', 'shadow-md', 'slideFromTop')
+            navbar.classList.add('sticky', 'top-0', 'shadow-md', 'slideFromTop')
             socialBar.classList.remove('py-2', 'h-fit', 'slideFromTop')
             socialBar.classList.add('h-0', 'overflow-hidden')
         }
         else {
-            navbar.classList.remove('fixed', 'top-0', 'z-50', 'shadow-md', 'slideFromTop')
+            navbar.classList.remove('fixed', 'top-0', 'shadow-md', 'slideFromTop')
             socialBar.classList.remove('h-0')
             socialBar.classList.add('h-fit', 'py-2', 'slideFromTop')
         }
@@ -496,15 +495,15 @@ export const Navbar = () => {
 
 
     return (
-        <nav className={` ${isMobile || isTablet ? '' : 'pb-8'} bg-background sticky top-0 z-50`}
-            style={{ transition: 'all 0.5s ease', backdropFilter: 'blur(5px)' }}>
+        <nav className={` ${isMobile || isTablet ? '' : 'pb-8'} bg-background `}
+            style={{ transition: 'all 0.5s ease', zIndex: 1000 }} >
 
             {isMobile || isTablet ?
                 <div className=" ">
                     <MobileNav />
                 </div>
                 :
-                <div className="large-nav ">
+                <div className="large-nav  " style={{ zIndex: 1000 }}>
                     <SocialBar />
                     <TopBar />
                     <BottomBar />
@@ -549,9 +548,9 @@ const MobileNav = () => {
 
 
     return (
-        <div className={`mobile-nav  flex flex-col p-12 sticky top-0 shadow-md ${showMenu ? 'h-screen' : 'h-fit'}`}>
+        <div className={`mobile-nav  flex flex-col p-12 sticky top-0 shadow-md ${showMenu ? 'h-screen' : 'h-fit'}`} style={{ zIndex: 1000 }}>
             <div className="relative flex justify-between ">
-                <ButtonWithIcon label="" isLink icon={<Link href='/' ><h3>BLACKINKPAPER</h3></Link>} onClick={() => { }} />
+                <ButtonWithIcon label="" isLink icon={<Link href='/'> <h3>BLACKINKPAPER</h3> </Link>} onClick={() => { }} />
                 <ButtonWithIcon label={""}
                     icon={showMenu ?
                         <X size={1.5 * iconSize} />
@@ -564,7 +563,7 @@ const MobileNav = () => {
             </div>
             {showMenu
                 &&
-                <div className=" mobile-nav-items    w-full  text-2xl bg-white" >
+                <div className=" mobile-nav-items w-full text-2xl bg-white pt-4 border-t-[1px] border-gray-100" >
                     <ul className=" *:mb-6">
                         {/* <li>
                                     <Link href='/' > Home </Link>

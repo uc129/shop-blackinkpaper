@@ -7,6 +7,7 @@ import { DataStoreProvider } from "./lib/data-store/store";
 import { WindowProvider } from "./lib/utils/windowContext";
 import { InfoBar } from "./components/info-bar";
 import { Toaster } from "react-hot-toast";
+import NavigationBar from "./navigation-bar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
               <Toaster />
 
               <Navbar />
+              {/* <NavigationBar /> */}
               <InfoBar />
               <main className="min-w-screen ">
                 {children}
