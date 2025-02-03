@@ -1,16 +1,8 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
+import { CartSchema, CartType } from '../user/cart/model';
+import { AddressSchema, AddressType } from '../user/address/model';
 
-export type CartItemType = {
-    productId: Schema.Types.ObjectId;
-    quantity: number;
-    price: number;
-}
 
-export type CartType = {
-    items: CartItemType[];
-    total: number;
-    totalItems: number;
-}
 
 export type ImageDataType = {
     publicId: string,
@@ -20,10 +12,12 @@ export type ImageDataType = {
 }
 
 
+
 export type UserType = {
     username: string;
     email: string;
     phone: string;
+    address: AddressType[]
     password: string;
     role: string;
     image_urls: string[];
@@ -33,9 +27,7 @@ export type UserType = {
     resetPasswordToken: string;
     resetPasswordTokenExpiration: Date;
     isVerified: boolean;
-    wishList: {
-        items: Schema.Types.ObjectId[] | string[];
-    }
+    wishList: { items: Schema.Types.ObjectId[] | string[]; }
     orders: Schema.Types.ObjectId[] | string[];
     imageData: ImageDataType[];
 }
@@ -44,17 +36,9 @@ const UserSchema = new Schema<UserType>({
     username: { type: String, },
     email: { type: String, },
     password: { type: String, },
+    address: { type: [AddressSchema] },
     role: { type: String, },
-
-    cart: {
-        items: [{
-            productId: { type: Schema.Types.ObjectId, ref: 'Product', },
-            quantity: { type: Number, },
-            price: { type: Number, },
-        }],
-        total: { type: Number, },
-        totalItems: { type: Number, },
-    },
+    cart: { type: CartSchema },
     wishList: {
         items: [{
             productId: { type: Schema.Types.ObjectId, ref: 'Product', },
@@ -77,7 +61,9 @@ const UserSchema = new Schema<UserType>({
 });
 
 
-const UserModel = mongoose.model<UserType>('User', UserSchema);
-// const UserModel = mongoose.models.User || mongoose.model('User', UserSchema);
+
+
+// const UserModel = mongoose.model<UserType>('User', UserSchema);
+const UserModel: Model<UserType> = mongoose.models?.User || mongoose.model<UserType>('User', UserSchema);
 
 export { UserModel, UserSchema };

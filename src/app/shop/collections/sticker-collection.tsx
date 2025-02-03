@@ -18,6 +18,7 @@ export const StickerCollection = () => {
                 description="Check out our Sticker products"
                 link="/shop/collections/Sticker"
                 linkText="View All"
+                collection_link="/shop/collections/stickers"
             />
         </div>
     )

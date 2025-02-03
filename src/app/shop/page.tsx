@@ -7,9 +7,19 @@ const CollectionsData: CollectionCardProps[] = [
         link: "/shop/collections/architecture"
     },
     {
+        title: "New Releases",
+        image: "https://picsum.photos/800",
+        link: "/shop/collections/new-releases"
+    },
+    {
+        title: "Botany",
+        image: "https://picsum.photos/800",
+        link: "/shop/collections/botany"
+    },
+    {
         title: "Best Sellers",
         image: "https://picsum.photos/800",
-        link: "/shop/collections/bestSellers"
+        link: "/shop/collections/best-sellers"
     },
     {
         title: "Framed",
@@ -31,22 +41,14 @@ const CollectionsData: CollectionCardProps[] = [
         image: "https://picsum.photos/800",
         link: "/shop/collections/rolled"
     },
-    {
-        title: "New Releases",
-        image: "https://picsum.photos/800",
-        link: "/shop/collections/newReleases"
-    },
+
     {
         title: "Featured",
         image: "https://picsum.photos/800",
         link: "/shop/collections/featured"
     },
 
-    {
-        title: "Botany",
-        image: "https://picsum.photos/800",
-        link: "/shop/collections/botany"
-    },
+
     {
         title: "People",
         image: "https://picsum.photos/800",

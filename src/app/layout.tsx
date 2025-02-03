@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./navbar";
 import AuthProvider from "./lib/utils/authContext";
@@ -7,16 +6,18 @@ import { DataStoreProvider } from "./lib/data-store/store";
 import { WindowProvider } from "./lib/utils/windowContext";
 import { InfoBar } from "./components/info-bar";
 import { Toaster } from "react-hot-toast";
-import NavigationBar from "./navigation-bar";
+import { Poppins } from "next/font/google";
+// import { CartProvider } from "./lib/cart/cartContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const poppins = Poppins({
+  weight: '400',
+  style: 'normal',
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+  adjustFontFallback: true,
+  fallback: ['sans-serif'],
+  variable: '--font-poppins'
 });
 
 export const metadata: Metadata = {
@@ -29,6 +30,9 @@ export const viewport: Viewport = {
   initialScale: 1,
   width: "device-width",
   maximumScale: 1,
+  userScalable: false,
+  colorScheme: "dark light",
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({
@@ -42,14 +46,14 @@ export default function RootLayout({
         <DataStoreProvider>
           <WindowProvider>
             <body
-              className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+              className={`${poppins.className} `}
             >
               <Toaster />
 
               <Navbar />
               {/* <NavigationBar /> */}
               <InfoBar />
-              <main className="min-w-screen ">
+              <main className="overflow-x-hidden">
                 {children}
               </main>
             </body>

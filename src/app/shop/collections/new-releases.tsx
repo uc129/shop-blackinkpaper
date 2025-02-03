@@ -25,17 +25,18 @@ export const NewReleaseCollections = (props: { limit?: number }) => {
     if (!newProducts || newProducts.length === 0) return <h1>Loading..</h1>
 
     return (
-        <div>
+        <section>
             <ProductCollections products={newProducts}
                 title="New Releases"
                 description="Check out our latest products"
                 link="/shop/collections/new-releases"
                 linkText="View All"
                 limit_products={props.limit}
+                collection_link="/shop/collections/new-releases"
             />
 
 
-        </div>
+        </section>
     )
 
 

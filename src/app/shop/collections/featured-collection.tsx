@@ -20,6 +20,7 @@ export const FeaturedCollections = () => {
                 description="Check out our Featured products"
                 link="/shop/collections/Featured"
                 linkText="View All"
+                collection_link="/shop/collections/featured"
             />
         </div>
     )

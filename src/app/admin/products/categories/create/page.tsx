@@ -4,7 +4,6 @@ import { ButtonWithIcon } from "@/app/components/buttons/buttonsWithIcon";
 import { ImageData, ImageUploadButton } from "@/app/components/buttons/upload-image-button";
 import { FormContainer } from "@/app/components/form-components/form-container";
 import { CustomTextArea, CustomTextInput } from "@/app/components/form-components/inputs/custom-text-input";
-import { revalidateTag } from "next/cache";
 import Image from "next/image";
 import { useState } from "react";
 export default function CreateCategoryPage() {
@@ -37,10 +36,8 @@ export default function CreateCategoryPage() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(category),
-            },
-            )
-            revalidateTag('categories')
+                body: JSON.stringify(category)
+            })
             const data = await res.json();
             console.log(data);
         }

@@ -9,14 +9,15 @@ export const BestSellersCollections = ({ limit }: { limit?: number }) => {
     if (bestSellerProducts.length === 0) return null
 
     return (
-        <div>
+        <section>
             <ProductCollections products={bestSellerProducts} limit_products={limit}
                 title="Best Sellers"
                 description="Check out our best sellers"
                 link="/shop/collections/bestSellers"
                 linkText="View All"
+                collection_link="/shop/collections/best-sellers"
             />
-        </div>
+        </section>
     )
 
 }

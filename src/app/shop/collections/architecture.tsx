@@ -11,15 +11,16 @@ export const ArchitectureCollections = ({ limit }: { limit?: number }) => {
 
 
     return (
-        <div className="p-12">
+        <section className="">
             <ProductCollections products={architectureProducts}
                 title="Architecture Collection"
                 description="Check out our architecture collection"
                 link="/shop/collections/architecture"
                 linkText="View All"
                 limit_products={limit}
+                collection_link="/shop/collections/architecture"
             />
-        </div>
+        </section>
     )
 
 }

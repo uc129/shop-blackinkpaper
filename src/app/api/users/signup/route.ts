@@ -5,7 +5,7 @@ import { UserModel, UserType } from "../model";
 
 export async function POST(req: NextRequest) {
     await connect();
-    const body: UserType = await req.json();
+    const body = await req.json();
 
     console.log(body);
     const { username, email, phone, password, role, imageData, image_urls } = body;

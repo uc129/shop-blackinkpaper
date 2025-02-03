@@ -1,8 +1,5 @@
 'use client'
 import { ProductType } from "@/app/api/products/model";
-import CustomImage from "../../components/Image/image";
-import { useRouter } from "next/navigation";
-import { ButtonWithIcon } from "../../components/buttons/buttonsWithIcon";
 import { ButtonWithLink } from "../../components/buttons/buttonWithLink";
 import { useState, useEffect } from "react";
 import { ProductCard } from "../products/products-card";
@@ -15,6 +12,7 @@ export type ProductCollectionsProps = {
     link: string;
     linkText: string;
     limit_products?: number;
+    collection_link: string;
 }
 
 export const ProductCollections = (props: ProductCollectionsProps) => {
@@ -27,13 +25,15 @@ export const ProductCollections = (props: ProductCollectionsProps) => {
         }
     }, [props.limit_products])
     return (
-        <div className="pt-12 pb-4">
-            <div className="flex flex-col gap-8">
-                <div className="text-center">
+        <div className=" pt-12 ">
+            <div className="flex flex-col justify-between gap-4">
+
+                <div className="text-center mb-12">
                     <h4 className="uppercase">{props.title} </h4>
                     <p>{props.description}</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+
+                <div className="flex flex-wrap justify-center xl:justify-start  gap-2  items-end ">
 
                     {products.map((product) => {
                         return (
@@ -42,9 +42,8 @@ export const ProductCollections = (props: ProductCollectionsProps) => {
                     })}
                 </div>
 
+                {props.limit_products && < ButtonWithLink buttonText="View Collection" link={props.collection_link} />}
             </div>
-            {props.limit_products && < ButtonWithLink buttonText="View Collection" link="/shop/collections/new-releases" />}
-
         </div>
     )
 

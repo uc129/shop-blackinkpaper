@@ -12,6 +12,7 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { useDataStore } from "@/app/lib/data-store/store";
 import { revalidateTag } from "next/cache";
+import toast from "react-hot-toast";
 
 
 
@@ -37,8 +38,8 @@ export default function ManageCategoryPage() {
             alert('Please fill in all fields');
             return
         }
-        console.log('submitting', category);
-        const create = async () => {
+        // console.log('submitting', category);
+        const update = async () => {
             const res = await fetch('/api/categories', {
                 method: 'PUT',
                 headers: {
@@ -47,10 +48,15 @@ export default function ManageCategoryPage() {
                 body: JSON.stringify(category)
             })
             const data = await res.json();
+            if (data.status === 200) {
+                toast.success('Category updated successfully');
+                window.history.back();
+
+            }
             console.log(data);
         }
         try {
-            create();
+            update();
             revalidateTag('categories');
         }
         catch (error) {

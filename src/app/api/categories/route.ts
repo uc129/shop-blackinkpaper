@@ -9,7 +9,6 @@ export async function GET() {
     await connect()
     try {
         const categories = await ProductCategoryModel.find({});
-        console.log('categories', categories);
 
         return NextResponse.json({ message: 'Categories retrieved', status: 200, categories });
     }

@@ -17,6 +17,7 @@ export const AbstractCollections = () => {
                 description="Check out our Abstract products"
                 link="/shop/collections/Abstract"
                 linkText="View All"
+                collection_link="/shop/collections/Abstract"
             />
         </div>
     )

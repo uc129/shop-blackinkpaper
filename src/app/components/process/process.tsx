@@ -16,7 +16,11 @@ const ProcessData = [
             "/process/paris/paris-4.png",
             "/process/paris/paris-5.png",
             "/process/paris/paris-6.png"
-        ]
+        ],
+        videos: [
+
+        ],
+        shop_link: '/shop/product/67922950878d848f980235ed'
     },
 
     {
@@ -37,8 +41,8 @@ const ProcessData = [
         ],
         videos: [
             "/process/green-mansion/green-mansion-9.mp4"
-
-        ]
+        ],
+        shop_link: '/shop/product/67922950878d848f980235ed'
     }
 
 
@@ -81,7 +85,7 @@ const ProcessSection = () => {
                                     </div>
                                 </div>
 
-                                <ButtonWithLink className="my-4" buttonText="Shop Product" link="/shop/product/kemknevrn" />
+                                <ButtonWithLink className="my-4" buttonText="Shop Product" link={process.shop_link} />
                             </div>
                         )
 

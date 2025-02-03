@@ -5,7 +5,7 @@ import { ArchitectureCollections } from "../architecture";
 import { BotanyCollections } from "../botany";
 import { AbstractCollections } from "../abstract";
 import { StickerCollection } from "../sticker-collection";
-import { FramedCollections } from "../frmaed-collections";
+import { FramedCollections } from "../framed-collections";
 import { RolledCollections } from "../rolled-collections";
 import { BestSellersCollections } from "../best-sellers";
 import { FeaturedCollections } from "../featured-collection";

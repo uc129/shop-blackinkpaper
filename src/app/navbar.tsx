@@ -9,8 +9,7 @@ import { ButtonWithIcon } from "./components/buttons/buttonsWithIcon";
 import { useWindowContext } from "./lib/utils/windowContext";
 import { useAuthContext } from "./lib/utils/authContext";
 import LogoutButton from "./logout/logoutButton";
-
-
+import { useRouter } from "next/navigation";
 
 
 
@@ -68,38 +67,54 @@ const SocialBar = () => {
 
 const TopBar = () => {
 
+    const router = useRouter()
 
-    const handleSearchClick = () => {
 
-    }
 
     const handleWishListClick = () => {
 
     }
 
     const handleCartClick = () => {
+        router.push('/shop/cart')
 
     }
 
-    const { isAuthenticated } = useAuthContext()
+    const { isAuthenticated, user } = useAuthContext()
+
+    const [profileLink, setProfileLink] = useState('/user/profile');
+
+    useEffect(() => {
+        if (isAuthenticated && user?.role === 'admin') {
+            setProfileLink(`/admin`)
+        }
+        else if (isAuthenticated) {
+            setProfileLink(`/user/profile`)
+        }
+        else {
+            setProfileLink(`/login`)
+        }
+    })
+
+
 
 
 
 
     return (
         <div style={{ zIndex: 1000 }}>
-            <ul className="flex items-start justify-between px-36 py-10 flex-wrap ">
+            <ul className="flex  justify-between px-36  py-10 flex-wrap ">
 
-                <li>
+                {/* <li>
                     <ButtonWithIcon
                         label=""
                         icon={<MagnifyingGlass size={iconSize} />}
                         onClick={handleSearchClick} classNames="" />
-                </li>
+                </li> */}
 
                 <li>
                     <ButtonWithIcon label="" isLink icon={<Link href={"/"}
-                        className="logo text-2xl font-bold ml-24" >
+                        className="logo text-2xl font-bold " >
                         BLACKINKPAPER </Link>} onClick={() => { }} />
                 </li>
 
@@ -109,17 +124,17 @@ const TopBar = () => {
                             <ul className="flex items-start justify-between gap-7">
 
                                 <li>
-                                    <ButtonWithIcon isLink icon={<>  <Link href="/admin" > <User size={iconSize} />  </Link></>} label={""} onClick={() => { }} />
+                                    <ButtonWithIcon isLink icon={<>  <Link href={profileLink} > <User size={iconSize} />  </Link></>} label={""} onClick={() => { }} />
                                 </li>
                                 <li>
                                     <ButtonWithIcon label="" icon={<Heart size={iconSize} />} onClick={handleWishListClick} />
                                 </li>
-                                <li>
+                                <li className="relative">
                                     <ButtonWithIcon label="" icon={<ShoppingBag size={iconSize} />} onClick={handleCartClick} />
+                                    {/* {cart.items.length > 0 && <span className="absolute top-5 right-5">{cart.items.length}</span>} */}
                                 </li>
-                                {
-                                    isAuthenticated && <li> <LogoutButton /> </li>
-                                }
+                                {isAuthenticated && <li> <LogoutButton /> </li>}
+
                             </ul>
 
 
@@ -293,7 +308,7 @@ const CollectionsNav = (props: { classNames?: string, onMouseLeave?: (e: React.M
 
     return (
         <div className={`${props.classNames}`} id='collections-nav' onMouseLeave={props.onMouseLeave} style={{ zIndex: 1000 }} >
-            <ul className="grid grid-cols-5 px-36 py-10 w-full bg-white pt-8 text-black">
+            <ul className="grid grid-cols-5 px-36 py-10 w-full bg-background pt-8 text-black">
                 {shopLinks.map((collection) =>
                     <li key={collection.collectionName}>
                         <ul>
@@ -337,21 +352,21 @@ const collabLinks = {
     ]
 }
 
-const DropDowns = (props: { links: { title: string, link: string, icon: React.ReactNode }[], onMouseLeave?: (e: React.MouseEvent) => void, classNames?: string }) => {
+// const DropDowns = (props: { links: { title: string, link: string, icon: React.ReactNode }[], onMouseLeave?: (e: React.MouseEvent) => void, classNames?: string }) => {
 
-    return (
-        <ul className={`hidden min-w-32  ${props.classNames}`} onMouseLeave={props.onMouseLeave} style={{ zIndex: 1000 }}>
-            <div className="mt-4">
-                {props.links.map((link) =>
-                    <li key={link.link} className="">
-                        <Link href={link.link} className="" > {link.title} </Link>
-                    </li>
-                )}
-            </div>
+//     return (
+//         <ul className={`hidden min-w-32  ${props.classNames}`} onMouseLeave={props.onMouseLeave} style={{ zIndex: 1000 }}>
+//             <div className="mt-4">
+//                 {props.links.map((link) =>
+//                     <li key={link.link} className="">
+//                         <Link href={link.link} className="" > {link.title} </Link>
+//                     </li>
+//                 )}
+//             </div>
 
-        </ul>
-    )
-}
+//         </ul>
+//     )
+// }
 
 
 const BottomBar = () => {
@@ -370,38 +385,6 @@ const BottomBar = () => {
         let collectionsNav = document.getElementById('collections-nav');
         if (!target || !collectionsNav) return;
         collectionsNav.classList.add('hidden')
-    }
-    const handleMouseEnter = (e: React.MouseEvent) => {
-        e.preventDefault();
-        let target = e.target as HTMLElement;
-        let children = target.children;
-        if (!target || !children) return;
-        // console.log('child[1]', children[1])
-        children[1]?.classList.remove('hidden');
-    }
-    const handleMouseLeave = (e: React.MouseEvent) => {
-        e.preventDefault();
-        let target = e.target as HTMLElement;
-        if (!target) return;
-
-        if (target.tagName === 'UL') {
-            target.classList.add('hidden')
-        }
-        else if (target.tagName === 'A') {
-            let sibling = target.nextElementSibling;
-            sibling?.classList.add('hidden')
-        }
-
-        else if (target.tagName === 'LI') {
-            if (target.classList.contains('relative')) {
-                return target?.children[1]?.classList.add('hidden')
-            }
-            let parent = target.parentElement;
-            let grandparent = parent?.parentElement;
-            return grandparent?.classList.add('hidden')
-        }
-
-
     }
     return (
         <div className="relative" style={{ zIndex: 1000 }} >
@@ -434,7 +417,14 @@ const BottomBar = () => {
 
                 <li>
                     <Link href='/shop/collections/architecture' > Architecture </Link>
+                </li>
 
+                <li>
+                    <Link href='/gallery' > Gallery </Link>
+                </li>
+
+                <li>
+                    <Link href='/contact' > Contact </Link>
                 </li>
 
 
@@ -517,10 +507,25 @@ export const Navbar = () => {
 
 
 const MobileNav = () => {
-    const { isAuthenticated } = useAuthContext()
+    const { isAuthenticated, user } = useAuthContext()
+
+    const [profileLink, setProfileLink] = useState('/user/profile');
+
+    useEffect(() => {
+        if (isAuthenticated && user?.role === 'admin') {
+            setProfileLink(`/admin`)
+        }
+        else if (isAuthenticated) {
+            setProfileLink(`/user/profile`)
+        }
+        else {
+            setProfileLink(`/login`)
+        }
+    })
 
     const [showMenu, setShowMenu] = React.useState(false);
-    const handleMenuClick = () => {
+    const handleMenuClick = (e: React.MouseEvent) => {
+        e.preventDefault();
         setShowMenu(!showMenu);
     }
 
@@ -546,24 +551,33 @@ const MobileNav = () => {
         })
     })
 
-
     return (
-        <div className={`mobile-nav  flex flex-col p-12 sticky top-0 shadow-md ${showMenu ? 'h-screen' : 'h-fit'}`} style={{ zIndex: 1000 }}>
-            <div className="relative flex justify-between ">
-                <ButtonWithIcon label="" isLink icon={<Link href='/'> <h3>BLACKINKPAPER</h3> </Link>} onClick={() => { }} />
-                <ButtonWithIcon label={""}
-                    icon={showMenu ?
-                        <X size={1.5 * iconSize} />
-                        :
-                        <List size={1.5 * iconSize} />
-                    }
-                    onClick={handleMenuClick}
-                    classNames={'float-end px-10 menu-button'}
-                />
+        <div className={`mobile-nav  flex flex-col  sticky top-0 shadow-md ${showMenu ? 'h-screen' : 'h-fit'}`} style={{ zIndex: 1000 }}>
+            <div className=" flex justify-between items-center p-8">
+                <Link href={'/'} > <span className="font-bold text-lg sm:text-xl md:text-2xl">BLACKINKPAPER</span> </Link>
+
+                <div className="flex items-center gap-4">
+                    <div className="relative">
+                        <Link href='/shop/cart' > <ShoppingBag size={1 * iconSize} /> </Link>
+                        {/* {cart.items.length > 0 && <span className="absolute top-3 -right-2">{cart.items.length}</span>} */}
+                    </div>
+
+                    <Link href='/shop/wishlist' > <Heart size={1 * iconSize} /> </Link>
+                    <Link href={profileLink} > <User size={1 * iconSize} /> </Link>
+                    <button type="button"
+                        onClick={handleMenuClick}
+                        className="menu-button *:pointer-events-none">
+                        {showMenu ?
+                            <X size={1.5 * iconSize} />
+                            :
+                            <List size={1.5 * iconSize} />
+                        }
+                    </button>
+                </div>
             </div>
             {showMenu
                 &&
-                <div className=" mobile-nav-items w-full text-2xl bg-white pt-4 border-t-[1px] border-gray-100" >
+                <div className="px-12 mobile-nav-items w-full text-2xl bg-background pt-4 border-t-[1px] border-gray-100" >
                     <ul className=" *:mb-6">
                         {/* <li>
                                     <Link href='/' > Home </Link>
@@ -573,20 +587,21 @@ const MobileNav = () => {
                             <Link href='/shop' > Shop Art </Link>
                         </li>
 
-                        <li className="relative">
-                            <Link href='/collaborations' className=""  > Collaborations 🤝  </Link>
+
+
+                        <li>
+                            <Link href='/new-releases' > Just Launched </Link>
                         </li>
 
                         <li>
-                            <Link href='/new-arrivals' > Just Launched </Link>
+                            <Link href='/shop/collections/architecture' > Architecture </Link>
                         </li>
 
                         <li>
-                            <Link href='/contact' > Wall Decor </Link>
+                            <Link href='/shop/collections/botany' > Botany </Link>
                         </li>
-
                         <li>
-                            <Link href='/contact' > Home Decor </Link>
+                            <Link href='/gallery' > Gallery </Link>
                         </li>
                         <li>
                             {isAuthenticated ?

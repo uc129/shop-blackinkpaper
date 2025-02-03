@@ -2,7 +2,7 @@
 import { useDataStore } from "@/app/lib/data-store/store"
 import { ProductCollections } from "./collections";
 
-export const BotanyCollections = () => {
+export const BotanyCollections = ({ limit }: { limit?: number }) => {
 
     const { products, categories } = useDataStore()
     const botanyCategory = categories.find((category) => category.title.toLowerCase() === "botany");
@@ -14,14 +14,16 @@ export const BotanyCollections = () => {
 
 
     return (
-        <div>
+        <section>
             <ProductCollections products={botanyProducts}
+                limit_products={limit}
                 title="Botany"
                 description="Check out our botany products"
                 link="/shop/collections/botany"
                 linkText="View All"
+                collection_link="/shop/collections/botany"
             />
-        </div>
+        </section>
     )
 
 }

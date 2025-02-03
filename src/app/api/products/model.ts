@@ -87,8 +87,8 @@ const ProductSchema = new Schema<ProductType>({
 
 
 
-const ProductModel = mongoose.model<ProductType>("Product", ProductSchema);
-// const ProductModel = mongoose.models.Product || mongoose.model<ProductType>("Product", ProductSchema);
+// const ProductModel = mongoose.model<ProductType>("Product", ProductSchema);
+const ProductModel = mongoose.models?.Product || mongoose.model<ProductType>("Product", ProductSchema);
 
 export { ProductModel, ProductSchema };
 

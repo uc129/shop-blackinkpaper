@@ -6,6 +6,7 @@ import { FormContainer } from "../components/form-components/form-container"
 import { useAuthContext } from "../lib/utils/authContext"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
+import Link from "next/link"
 
 export default function LoginPage() {
     const router = useRouter()
@@ -38,22 +39,23 @@ export default function LoginPage() {
         })
         const data = await res.json()
         if (data.status === 200) {
-
+            toast.remove()
             toast.success("Login successful")
-            toast.remove()
-            toast.loading("Redirecting...")
-            toast.remove()
             localStorage.setItem('email', data.user.email);
             localStorage.setItem('role', data.user.role);
-            router.refresh()
             setCheckAuthFlag(true)
-            if (data.user.role === 'admin')
-                router.replace('/admin')
-            else
-                router.replace('/profile')
-        }
-        if (data.status !== 200) {
-            toast.error(data.message)
+            router.refresh();
+            setTimeout(() => {
+                if (data.user.role === 'admin')
+                    router.replace('/admin')
+                else
+                    router.replace('/profile')
+            }, 1000)
+
+
+            if (data.status !== 200) {
+                toast.error('Login failed')
+            }
         }
     }
 
@@ -67,8 +69,13 @@ export default function LoginPage() {
     return (
         <div>
 
-            <FormContainer>
-                <h1>Login</h1>
+            <FormContainer title="Login">
+                <p>
+                    Welcome back! Please login to your account
+                </p>
+                <p>
+                    Don't have an account? <Link href="/signup" className="link"><span className="text-blue-500">Register here</span></Link>
+                </p>
                 <form>
                     {/* <CustomTextInput type="text" name="username" label="Username" value={loginData.username} onChange={handleChange} /> */}
                     <CustomTextInput type="text" name="email" label="Email" value={loginData.email} onChange={handleChange} />

@@ -7,12 +7,10 @@
   --slide-spacing: 1rem;
   --slide-size: 100%;
   z-index: 1;
-
 }
 
 .embla_hero__viewport {
   overflow: hidden;
-
 }
 
 .embla_hero__container {

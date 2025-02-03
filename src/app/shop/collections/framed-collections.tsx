@@ -18,6 +18,7 @@ export const FramedCollections = () => {
                 description="Check out our framed products"
                 link="/shop/collections/framed"
                 linkText="View All"
+                collection_link="/shop/collections/framed"
             />
         </div>
     )

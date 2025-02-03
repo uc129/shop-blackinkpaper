@@ -25,7 +25,6 @@ export const WindowProvider = ({ children }: { children: React.ReactNode }) => {
     });
 
     const updateScreenInfo = () => {
-        console.log('updateScreenInfo');
 
         const width = window.innerWidth;
         const height = window.innerHeight;
@@ -41,11 +40,9 @@ export const WindowProvider = ({ children }: { children: React.ReactNode }) => {
     useLayoutEffect(() => {
         // Update on initial render
         updateScreenInfo();
-        console.log('initial render');
 
         // Add event listener for screen resize
         window.addEventListener("resize", updateScreenInfo);
-        console.log('window resize event listener added');
         return () => {
             // Cleanup the event listener
             window.removeEventListener("resize", updateScreenInfo);

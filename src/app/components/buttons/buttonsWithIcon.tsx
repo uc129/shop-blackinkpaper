@@ -16,7 +16,7 @@ export const ButtonWithIcon = ({ icon, label, onClick, classNames, disabled, rtl
 
     return (
         <button id={id} onClick={onClick} disabled={disabled}
-            className={`flex items-center justify-center  rounded-md  mb-6  text-foreground 
+            className={` grid grid-cols-2  items-center mb-6 p-2 rounded-lg text-xs  text-foreground hover:-translate-y-[2px] transition-transform duration-200 ease-in-out
             ${classNames}
              ${rtl ? 'flex-row-reverse' : 'flex-row'}
              ${isLink ? 'pointer-events-none' : 'pointer-events-auto'} `

@@ -20,6 +20,7 @@ export const RolledCollections = () => {
                 description="Check out our Rolled products"
                 link="/shop/collections/Rolled"
                 linkText="View All"
+                collection_link="/shop/collections/rolled"
             />
         </div>
     )

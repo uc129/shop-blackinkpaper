@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const user = await UserModel.findOne({ authToken: token.value });
+        const user = await UserModel.findOne({ authToken: token.value }).select('-password');
         if (!user) {
             return NextResponse.json({ auth: false, status: 401, message: 'User not found' });
         }

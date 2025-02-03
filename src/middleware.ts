@@ -1,10 +1,16 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { UserModel } from './app/api/users/model';
 
 // This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
     const cookies = request.cookies.get('authToken');
-    if (cookies) {
+    const role = request.cookies.get('role');
+
+    if (cookies && role?.value === 'admin') {
+        return NextResponse.next()
+    }
+    else if (cookies && role?.value === 'user') {
         return NextResponse.next()
     }
     else return NextResponse.redirect(new URL('/login', request.url))

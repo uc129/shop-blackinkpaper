@@ -10,6 +10,7 @@ import { ButtonWithIcon } from "@/app/components/buttons/buttonsWithIcon"
 import { ImageData } from "@/app/components/buttons/upload-image-button"
 import { Schema } from "mongoose"
 import { revalidateTag } from "next/cache"
+import toast from "react-hot-toast"
 
 
 
@@ -55,7 +56,7 @@ export default function CreateProductPage() {
 
 
     const handleSubmit = () => {
-        console.log('submitting', productDetails);
+        // console.log('submitting', productDetails);
         const create = async () => {
             const res = await fetch('/api/products', {
                 method: 'POST',
@@ -67,19 +68,22 @@ export default function CreateProductPage() {
             const data = await res.json();
             let status = data.status;
             if (status === 201) {
-                console.log('Product created', data);
+                // console.log('Product created', data);
+                toast.success('Product created successfully');
+                // window.location.reload();
                 localStorage.removeItem('productDetails');
                 goToStep(0);
-                revalidateTag('products')
             }
             else
-                console.log(data);
+                // console.log(data);
+                return data;
         }
         try {
             create();
         }
         catch (error) {
-            console.log(error);
+            // console.log(error);
+            return { status: 500, message: 'Internal server error' }
         }
     }
 

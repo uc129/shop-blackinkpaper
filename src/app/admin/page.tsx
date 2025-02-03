@@ -1,8 +1,7 @@
-import AdminSidebar from "./sidebar"
 
 
 
-export default function ADminPage() {
+export default function AdminPage() {
     return (
         <div className="">
             <h1>Admin Page</h1>

@@ -1,6 +1,7 @@
 'use client'
 import { ProductType } from "@/app/api/products/model";
 import CustomImage from "@/app/components/Image/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export type ProductCardProps = {
@@ -14,16 +15,17 @@ export const ProductCard = (props: ProductCardProps) => {
 
 
     return (
-        <div key={props.product._id as unknown as string} onClick={() => router.push(props.link)}
-            className="flex flex-col  gap-4 border-b-[1px] border-gray-100 md:border-none py-4">
-            <div className="min-h-[340px] p-4 cursor-pointer">
-                <CustomImage src={props.product.image_urls[0]} alt={props.product.title} width={500} />
+        <Link href={props.link} key={props.product._id as unknown as string}
+            className="flex flex-col w-96 md:w-80 justify-between gap-8 border-b-[1px] border-gray-100 md:border-none  p-4 rounded-xl ">
+
+            <div className="overflow-hidden mx-auto min-h-[200px]  border-2 border-black  rounded-xl p-4" >
+                {props.product.image_urls[0] !== '' &&
+                    <CustomImage src={props.product.image_urls[0]} alt={props.product.title} width={300} className="" />}
             </div>
-            <div className="text-center">
-                <p>{props.product.title}</p>
-                <div className={`flex gap-4 items-center justify-center  
-                    ${props.product.discount > 0 ? 'grid-cols-2' : 'grid-cols-1'} `}
-                >
+
+            <div className="text-center border-2 border-black hover:bg-gray-200 rounded-xl p-4 min-h-[100px] flex flex-col justify-center gap-2">
+                <p className="uppercase">{props.product.title}</p>
+                <div className={`flex gap-4 items-center justify-center  ${props.product.discount > 0 ? 'grid-cols-2' : 'grid-cols-1'} `} >
                     <p className={`${props.product.discount > 0 ? 'line-through ' : ''}`}>
                         Rs.{props.product.price}</p>
 
@@ -40,7 +42,8 @@ export const ProductCard = (props: ProductCardProps) => {
                 }
 
             </div>
-        </div>
+
+        </Link>
     )
 
 }

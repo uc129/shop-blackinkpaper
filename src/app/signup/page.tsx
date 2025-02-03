@@ -8,6 +8,8 @@ import { CustomTextInput } from "@/app/components/form-components/inputs/custom-
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { FormContainer } from "../components/form-components/form-container";
+import Link from "next/link";
+import toast from "react-hot-toast";
 
 type SignupType = Partial<UserType>
 
@@ -64,22 +66,31 @@ export default function SignupPage() {
 
     }
 
-    const handleSubmit = async () => {
-        if (!user.username || !user.email || !user.password || !user.role) {
-            console.log('Please fill out all fields')
-            alert('Please fill out all fields')
+    const handleSubmit = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (!user.username || !user.email || !user.password || !user.role || !user.phone) {
+            toast.error('Please fill out all fields')
             return
         }
-        const res = await fetch('/api/users/signup', {
-            method: 'POST',
-            body: JSON.stringify(user),
-            headers: {
-                'Content-Type': 'application/json'
+        else {
+            const res = await fetch('/api/users/signup', {
+                method: 'POST',
+                body: JSON.stringify(user),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const data = await res.json()
+            console.log(data);
+            if (data.status === 200) {
+                toast.success('User created successfully')
+                window.location.href = '/login'
             }
-        })
+            else {
+                toast.error('Error creating user')
+            }
+        }
 
-        const data = await res.json()
-        console.log(data)
     }
 
     const roleOptions = [{
@@ -101,7 +112,8 @@ export default function SignupPage() {
                 secure_url: '',
                 original_filename: ''
             }]
-        })
+        });
+
     }
 
 
@@ -110,6 +122,8 @@ export default function SignupPage() {
         <div>
             <FormContainer>
                 <h1>Signup Page</h1>
+                <span>Already have an account? </span>
+                <Link className="link" href={'/login'}>Login here</Link>
                 <form >
                     <CustomTextInput label="Email" name="email" type="email" value={user.email!} onChange={handleChange} />
                     <CustomTextInput label="Username" name="username" type="text" value={user.username!} onChange={handleChange} />
@@ -117,9 +131,11 @@ export default function SignupPage() {
                     <CustomTextInput label="Phone" name="phone" type="text" value={user.phone!} onChange={handleChange} />
                     <CustomTextInput label="Password" name="password" type="password" value={user.password!} onChange={handleChange} />
                     <CustomSelect label="Role" name="role" value={user.role!} onChange={handleSelectChange} options={roleOptions} />
-                    <ImageUploadButton retrieveImageUrls={retrieveImageUrls} />
-                    {/* <button type="button" className="btn btn-primary block" onClick={handleSubmit} >Submit</button> */}
-                    <ButtonWithIcon label="Submit" icon={<></>} onClick={handleSubmit} />
+                    <div className="w-[40%]">
+                        <ImageUploadButton retrieveImageUrls={retrieveImageUrls} />
+                        {/* <button type="button" className="btn btn-primary block" onClick={handleSubmit} >Submit</button> */}
+                    </div>
+                    <ButtonWithIcon label="Submit" classNames="primary mt-8" icon={<></>} onClick={handleSubmit} />
                 </form>
 
                 <div className="flex gap-12 items-center">

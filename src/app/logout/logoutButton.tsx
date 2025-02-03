@@ -25,6 +25,10 @@ export default function LogoutButton() {
             toast.success("Logged out successfully")
             localStorage.removeItem('email');
             localStorage.removeItem('role');
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            localStorage.removeItem('cart');
+            localStorage.removeItem('shippingAddress');
             setCheckAuthFlag(true)
             console.log('Logged out');
             router.replace('/')

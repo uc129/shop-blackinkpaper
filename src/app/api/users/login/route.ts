@@ -43,6 +43,8 @@ export async function POST(req: NextRequest) {
     let res = NextResponse.json({ token: signedToken, user: tokenData, status: 200 });
     const cookieStore = await cookies();
     cookieStore.set('authToken', signedToken, { expires: user.tokenExpiration });
+    cookieStore.set('role', user.role, { expires: user.tokenExpiration });
+
     return res;
 
 

@@ -24,7 +24,8 @@ export const CreateProductStep1 = ({ product, retrieveData }: { product?: Produc
         if (product) {
             setProductDetails(product)
         }
-    }, [product])
+        console.log('product details', productDetails);
+    }, [product, productDetails])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (e.target.type === 'checkbox') {
@@ -38,8 +39,8 @@ export const CreateProductStep1 = ({ product, retrieveData }: { product?: Produc
     }
 
     useEffect(() => {
-        if (productDetails.price && productDetails.discount) {
-            setProductDetails({ ...productDetails, price_after_discount: productDetails.price - (productDetails.discount * 0.01 * productDetails.price) })
+        if (productDetails.price) {
+            setProductDetails({ ...productDetails, price_after_discount: productDetails.price - ((productDetails.discount || 0) * 0.01 * productDetails.price) })
         }
     }, [productDetails.price, productDetails.discount])
     useEffect(() => {

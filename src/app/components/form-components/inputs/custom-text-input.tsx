@@ -7,6 +7,7 @@ export type CustomTextInputProps = {
     name: string;
     type?: string;
     value: string;
+    classname?: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     placeholder?: string;
     error?: string;
@@ -18,9 +19,9 @@ export type CustomTextInputProps = {
 }
 
 
-export const CustomTextInput = ({ label, name, type, value, onChange, placeholder, error, onBlur, onFocus, touched, min, max }: CustomTextInputProps) => {
+export const CustomTextInput = ({ classname, label, name, type, value, onChange, placeholder, error, onBlur, onFocus, touched, min, max }: CustomTextInputProps) => {
     return (
-        <div className="form-group">
+        <div className={` form-group ${classname} `}>
             <label htmlFor={name}>{label}</label>
             <input
                 type={type}

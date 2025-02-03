@@ -1,5 +1,6 @@
 'use client'
 import { ArrowDown, TagChevron } from "@phosphor-icons/react";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -32,8 +33,21 @@ const Links = [
     },
     {
         title: 'Categories',
-        href: "/admin/categories",
-        children: []
+        href: "/admin/products/categories",
+        children: [
+            {
+                title: 'All Categories',
+                href: "/admin/products/categories/"
+            },
+            {
+                title: 'Add Category',
+                href: "/admin/products/categories/add"
+            },
+            // {
+            //     title: 'Manage Categories',
+            //     href: "/admin/categories"
+            // }
+        ]
     },
     {
         title: 'Orders',
@@ -65,27 +79,6 @@ export default function AdminSidebar() {
         index: -1
     });
 
-    const [scrolledPast, setScrolledPast] = useState(false);
-
-    // useEffect(() => {
-    //     let scrollY;
-    //     window.addEventListener('scroll', () => {
-    //         scrollY = window.scrollY;
-    //         if (!scrollY) return;
-    //         let navbarHeight = document.getElementsByTagName('nav')[0]?.clientHeight;
-    //         // console.log('scrollY', scrollY, 'navbarHeight', navbarHeight + 100);
-
-    //         if (scrollY > navbarHeight + 100) {
-    //             setScrolledPast(true);
-    //             console.log('scrolling past');
-    //             document.querySelector('#admin-sidebar')?.classList.add('sticky', 'top-64');
-    //         }
-    //         else if (scrollY <= 40) {
-    //             setScrolledPast(false)
-    //             document.querySelector('#admin-sidebar')?.classList.remove('sticky');
-    //         }
-    //     })
-    // })
 
 
 
@@ -103,7 +96,7 @@ export default function AdminSidebar() {
 
 
     return (
-        <div id="admin-sidebar" className=" w-1/6 min-w-[188px] rounded-tr-lg rounded-br-lg max-w-[340px] h-[70vh] sticky top-64   bg-gray-200 pt-8">
+        <div id="admin-sidebar" className=" w-1/6 min-w-[288px] rounded-tr-lg rounded-br-lg max-w-[340px] min-h-[70vh] sticky top-24   bg-gray-200 pt-8">
             <div className="flex flex-col gap-4 p-4">
                 {/* <Link href="/admin">
                     <p className="p-2 ">Dashboard</p>
@@ -117,13 +110,14 @@ export default function AdminSidebar() {
                 <Link href="/admin/orders">
                     <p className="p-2 ">Orders</p>
                 </Link> */}
-                <h4 className="font-bold">Admin</h4>
+                <h4 className="font-bold pl-2">Admin</h4>
                 {
                     Links.map((link, index) => (
                         <div key={index} className="flex flex-col gap-4">
-                            <button onClick={toggleDropdown} data-index={index} className="grid grid-cols-2 gap-4 text-left ">
+                            <button onClick={toggleDropdown} data-index={index} className="grid grid-cols-2 gap-4 text-left items-center p-2 ">
                                 <Link href={link.href} className=" ">{link.title}</Link>
-                                {link.children.length > 0 && <span className="pointer-events-none"><ArrowDown /></span >}
+                                {link.children.length > 0 &&
+                                    <Image src={'/icons/chevron.svg'} alt="chevron" width={10} height={10} />}
                             </button>
                             {link.children.length > 0 &&
                                 open.show && open.index === index &&

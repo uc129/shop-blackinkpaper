@@ -59,6 +59,26 @@ export default function ManageProductByIdPage() {
         return <h1>Loading...</h1>;
     }
 
+    const handleDelete = (e: React.MouseEvent) => {
+
+        e.preventDefault();
+        const deleteProduct = async () => {
+            const res = await fetch(`/api/products?id=${product._id}`, {
+                method: 'DELETE'
+            });
+            const data = await res.json();
+            if (data.status === 200) {
+                window.location.href = '/admin/products';
+            }
+            console.log('data', data);
+        }
+        try {
+            deleteProduct();
+        } catch (error) {
+            console.log('error deleting product', error);
+        }
+    }
+
 
 
     return (
@@ -91,9 +111,31 @@ export default function ManageProductByIdPage() {
                 }
 
 
-                <ButtonWithIcon label={editProduct ? 'Cancel' : 'Edit'} icon={editProduct ? '❌' : '✏️'}
-                    onClick={(e) => { e.preventDefault(); setEditProduct(!editProduct) }}
-                />
+                <div className="w-[10%] min-w-[120px]">
+                    <ButtonWithIcon
+                        classNames="primary"
+                        label={editProduct ? 'Cancel' : 'Edit'}
+                        icon={editProduct ? '❌' : '✏️'}
+                        onClick={(e) => { e.preventDefault(); setEditProduct(!editProduct) }}
+                    />
+                    <ButtonWithIcon
+                        classNames="warning"
+                        label={deleteProduct ? 'Cancel' : 'Delete'}
+                        icon={deleteProduct ? '❌' : '🗑️'}
+                        onClick={(e) => { e.preventDefault(); setDeleteProduct(!deleteProduct) }}
+                    />
+                </div>
+                {
+                    deleteProduct &&
+                    <div className="w-[30%] min-w-[140px]">
+                        <h3>Are you sure you want to delete this product?</h3>
+                        <ButtonWithIcon label="Yes" icon="✅" onClick={handleDelete} />
+                        <ButtonWithIcon label="No" icon="❌" onClick={(e) => {
+                            e.preventDefault();
+                            setDeleteProduct(false);
+                        }} />
+                    </div>
+                }
 
 
 
